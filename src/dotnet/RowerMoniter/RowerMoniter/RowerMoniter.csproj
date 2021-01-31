@@ -111,17 +111,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Json\BeginRecovery.cs" />
-    <Compile Include="Json\BeginStroke.cs" />
-    <Compile Include="Json\EndRecovery.cs" />
-    <Compile Include="Json\EndStroke.cs" />
-    <Compile Include="Json\Update.cs" />
+    <Compile Include="Json\BeginRecoveryMessage.cs" />
+    <Compile Include="Json\BeginStrokeMessage.cs" />
+    <Compile Include="Json\EndRecoveryMessage.cs" />
+    <Compile Include="Json\EndStrokeMessage.cs" />
+    <Compile Include="Json\IdleMessage.cs" />
+    <Compile Include="Json\UpdateMessage.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BeginRecovery.cs" />
+    <Compile Include="Model\BeginStroke.cs" />
+    <Compile Include="Model\EndRecovery.cs" />
+    <Compile Include="Model\EndStroke.cs" />
+    <Compile Include="Model\EventFactory.cs" />
+    <Compile Include="Model\FlywheelStatus.cs" />
+    <Compile Include="Model\Idle.cs" />
+    <Compile Include="Moniter\SerialMoniter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,5 +157,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

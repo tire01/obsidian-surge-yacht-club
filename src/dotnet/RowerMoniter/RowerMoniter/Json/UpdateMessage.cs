@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 
 namespace RowerMoniter.Json
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title ="beginStroke")]
-
-    public class BeginStroke
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "update")]
+    public class UpdateMessage
     {
-        public int Count { get; set; }
+        [JsonProperty(PropertyName ="rps")]
+        public decimal RadiansPerSecond {get; set;}
     }
 }

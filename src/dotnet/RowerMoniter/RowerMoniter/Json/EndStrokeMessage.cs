@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace RowerMoniter.Json
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "update")]
-    public class Update
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endStroke")]
+    public class EndStrokeMessage
     {
-        [JsonProperty(PropertyName ="rps")]
-        public decimal RadiansPerSecond {get; set;}
+        public int Length { get; set; }
+        public int Duration { get; set; }
+
     }
 }

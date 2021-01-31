@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RowerMoniter.Json;
 using System;
+using System.IO;
 
 namespace RowerMoniterTests
 {
@@ -44,9 +45,20 @@ namespace RowerMoniterTests
     //  endRecovery: { "length":1,"duration":2000}
     //  idle: { }
 
+
+    string testData =
+        "beginStroke:{\"count\":1}\r\n" +
+        "update:{\"rps\":1.1073647484}\r\n" +
+        "endStroke:{\"length\":1,\"duration\":1000}\r\n" +
+        "beginRecovery:{}\r\n" +
+        "endRecovery:{\"length\":1,\"duration\":2000}\r\n" +
+        "idle:{}\r\n";
+
+
     [TestMethod]
     public void DeserializeItems() 
     {
-        
+        var reader = new StringReader(testData);
+
     }
 }
