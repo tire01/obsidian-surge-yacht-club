@@ -1,7 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RowerMoniter.Json;
+using RowerMoniter.Moniter;
+using RowerMoniter.Model;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using LanguageExt;
 
 namespace RowerMoniterTests
 {
@@ -11,18 +17,18 @@ namespace RowerMoniterTests
         [TestMethod]
         public void SerializeItems()
         {
-            var beginStroke = new BeginStroke() { Count = 1 };
-            var endRecovery = new EndRevocery() { Duration = 2000, Length = 1 };
+            var beginStroke = new BeginStrokeMessage() { Count = 1 };
+            var endRecovery = new EndRecoveryMessage() { Duration = 2000, Length = 1 };
 
-            var update = new Update() { RadiansPerSecond = 1.1073647484M };
-            var endStroke = new EndStroke() { Duration = 1000, Length = 1 };
-            var beginRecovery = new BeginRecovery() { };
+            var update = new UpdateMessage() { RadiansPerSecond = 1.1073647484M };
+            var endStroke = new EndStrokeMessage() { Duration = 1000, Length = 1 };
+            var beginRecovery = new BeginRecoveryMessage() { };
 
             string serialized = null;
 
             serialized = JsonConvert.SerializeObject(beginStroke);
             Console.WriteLine($"beginStroke:{serialized}");
-            
+
             serialized = JsonConvert.SerializeObject(beginStroke);
             Console.WriteLine($"beginStroke:{serialized}");
 
@@ -35,18 +41,38 @@ namespace RowerMoniterTests
             serialized = JsonConvert.SerializeObject(beginStroke);
             Console.WriteLine($"beginStroke:{serialized}");
         }
-    }
 
-    //  beginStroke:{"count":1}
-    //  update: { "rps":1.1073647484}
-    //  endStroke: { "length":1,"duration":1000}
-    //  beginRecovery: { }
-    //  endRecovery: { "length":1,"duration":2000}
-    //  idle: { }
 
-    [TestMethod]
-    public void DeserializeItems() 
-    {
-        
+        //  beginStroke:{"count":1}
+        //  update: { "rps":1.1073647484}
+        //  endStroke: { "length":1,"duration":1000}
+        //  beginRecovery: { }
+        //  endRecovery: { "length":1,"duration":2000}
+        //  idle: { }
+
+        [TestMethod]
+        public void DeserializeItems()
+        {
+            string testData =
+              "beginStroke:{\"count\":1}\r\n" +
+              "update:{\"rps\":1.1073647484}\r\n" +
+              "endStroke:{\"length\":1,\"duration\":1000}\r\n" +
+              "beginRecovery:{}\r\n" +
+              "endRecovery:{\"length\":1,\"duration\":2000}\r\n" +
+              "idle:{}\r\n";
+            
+            var lines = testData.Split(new[] { '\r','\n' });
+            var messages = new List<Option<PocoObject>>();
+            
+            foreach (var line in lines) 
+            {
+                messages.Add(SerialMoniter.ParseLine(line));
+            }
+
+            var events = messages
+                .Bind(o => o)
+                .Map(EventFactory.CreateEvent);
+        }
+
     }
 }

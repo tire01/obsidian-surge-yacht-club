@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RowerMoniter.Json
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "update")]
-    public class Update
+    public sealed class UpdateMessage : PocoObject
     {
         [JsonProperty(PropertyName ="rps")]
         public decimal RadiansPerSecond {get; set;}

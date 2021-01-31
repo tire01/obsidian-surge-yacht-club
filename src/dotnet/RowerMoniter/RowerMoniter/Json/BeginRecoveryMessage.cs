@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace RowerMoniter.Json
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endRecovery")]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "beginRecovery")]
 
-    public class EndRevocery
+    public sealed class BeginRecoveryMessage : PocoObject
     {
-        public int Length { get; set; }
-        public int Duration { get; set; }
     }
 }

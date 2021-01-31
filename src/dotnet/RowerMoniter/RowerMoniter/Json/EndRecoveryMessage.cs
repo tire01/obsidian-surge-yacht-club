@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RowerMoniter.Json
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endStroke")]
-    public class EndStroke
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endRecovery")]
+
+    public sealed class EndRecoveryMessage : PocoObject
     {
         public int Length { get; set; }
         public int Duration { get; set; }
-
     }
 }

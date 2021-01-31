@@ -11,7 +11,7 @@ namespace RowerMoniter.Json
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title ="beginStroke")]
 
-    public class BeginStroke
+    public sealed class BeginStrokeMessage : PocoObject
     {
         public int Count { get; set; }
     }
