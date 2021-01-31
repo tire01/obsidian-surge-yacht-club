@@ -1,0 +1,6 @@
+beginStroke:{"count":1}
+update:{"rps":1.1073647484}
+endStroke:{"length":1,"duration":1000}
+beginRecovery:{}
+endRecovery:{"length":1,"duration":2000}
+idle:{}
