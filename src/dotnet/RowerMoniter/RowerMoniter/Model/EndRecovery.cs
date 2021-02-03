@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RowerMoniter.Json;
+using RowerMoniter.Contracts;
 using UnitsNet;
 
 namespace RowerMoniter.Model

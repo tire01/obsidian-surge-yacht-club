@@ -6,18 +6,29 @@ using System.Threading.Tasks;
 using LanguageExt;
 using static LanguageExt.Prelude;
 using Newtonsoft.Json;
-using RowerMoniter.Json;
+using RowerMoniter.Contracts;
+using RowerMoniter.Model;
+using System.Reactive.Subjects;
 
-namespace RowerMoniter.Moniter
+namespace RowerMoniter.Services
 {
-    public class Router
-    {
-        //  beginStroke:{"count":1}
-        //  update: { "rps":1.1073647484}
-        //  endStroke: { "length":1,"duration":1000}
-        //  beginRecovery: { }
-        //  endRecovery: { "length":1,"duration":2000}
-        //  idle: { }
+    public sealed class EventService {
+
+        private static Lazy<EventService> _instance = new Lazy<EventService>(() => new EventService());
+
+        public static EventService Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
+
+        private EventService() { }
+
+        private Subject<IRowEvent> _pipeline = new Subject<IRowEvent>();
+
+        public IObservable<IRowEvent> Pipeline { get { return _pipeline; } }
 
         public static Option<PocoObject> ParseLine(string line)
         {
@@ -40,7 +51,7 @@ namespace RowerMoniter.Moniter
                 case "beginStroke":
                     return Some((PocoObject)JsonConvert.DeserializeObject<BeginStrokeMessage>(line.Substring(jsonStartIndex)));
                 case "update":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<UpdateMessage>(line.Substring(jsonStartIndex)));
+                    return Some((PocoObject)JsonConvert.DeserializeObject<FlywheelSensorMessage>(line.Substring(jsonStartIndex)));
                 case "endStroke":
                     return Some((PocoObject)JsonConvert.DeserializeObject<EndStrokeMessage>(line.Substring(jsonStartIndex)));
                 case "beginRecovery":
@@ -54,5 +65,12 @@ namespace RowerMoniter.Moniter
             }
         }
 
+        public void ParseAndPublish(string line) 
+        {
+            ParseLine(line)
+                .Map(some => EventFactory.CreateEvent(some))
+                .Do(e => _pipeline.OnNext(e));
+        }
+        
     }
 }

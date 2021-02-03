@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RowerMoniter.Json;
+using RowerMoniter.Contracts;
 
 namespace RowerMoniter.Model
 {
@@ -23,7 +23,7 @@ namespace RowerMoniter.Model
                     return EndStroke.From(es);
                 case IdleMessage idle:
                     return Idle.From(idle);
-                case UpdateMessage fs:
+                case FlywheelSensorMessage fs:
                     return FlywheelStatus.From(fs);
 
             }

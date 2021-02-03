@@ -127,12 +127,12 @@ void readSensors()
 inline void beginStroke(unsigned long millis) 
 {
   strokeEllapsedTicks = strokeBeginTicks - millis;
+  strokeCount++;
+  writeBeginStroke(strokeCount);
 }
-
 inline void endStroke(unsigned long millis) 
 {
   strokeBeginTicks = millis;
-  strokeCount++;
 }
 
 inline bool debounce(int inputPin, volatile unsigned int* buffer) 
@@ -143,11 +143,53 @@ inline bool debounce(int inputPin, volatile unsigned int* buffer)
   return *buffer == 0xf000;
 }  
 
+        //  flywheel:{\"rps\":1.1073647484}
+        //  endStroke:{\"length\":1,\"duration\":1000}
+        //  beginRecovery:{}
+        //  endRecovery:{\"length\":1,\"duration\":2000}
+        //  idle: {}
+
+const String END_OBJECT = "}";
+const String BEGIN_OBJECT = ":{";
+const String QUOTE = "\"";
+const String COLON = ":";
+const String COMMA = ",";
+
+const String BEGIN_STROKE = "}";
+const String END_STROKE  = "}";
+const String BEGIN_RECOVERY = "}";
+const String END_RECOVERY = "}";
+const String FLYWHEEL = "}";
+
+const String ELLAPSED = "ellapsed";
+const String COUNT = "count";
+
+//beginStroke:{\"count\":1}
+void writeBeginStroke(unsigned long count) 
+{
+  printObjectName(BEGIN_STROKE);
+  printProperty(COUNT);
+  Serial.print(count);
+  Serial.println(END_OBJECT)
+}
+
+inline void printObjectName(String name) 
+{
+  Serial.print(BEGIN_STROKE);  
+  Serial.print(BEGIN_OBJECT);  
+}
+
+inline void printPropertyName(Stirng name)
+{
+    Serial.print(QUOTE);  
+    Serial.print(name);
+    Serial.print(QUOTE);
+    Serial.print(COLON);
+}
+
 // write stuff to serial computer.
 void writeData() 
 {
-  Serial.print("strokes:");
-  Serial.println(strokeCount);
 }
 
 void clockReset() {}

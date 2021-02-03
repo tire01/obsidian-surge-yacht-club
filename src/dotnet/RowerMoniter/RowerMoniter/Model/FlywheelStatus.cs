@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RowerMoniter.Json;
+using RowerMoniter.Contracts;
 using UnitsNet;
 
 namespace RowerMoniter.Model
@@ -19,7 +19,7 @@ namespace RowerMoniter.Model
             RadiansPerSecond = radiansPerSecond;
         }
 
-        public static FlywheelStatus From(UpdateMessage message) 
+        public static FlywheelStatus From(FlywheelSensorMessage message) 
         {
 
             return new FlywheelStatus(Angle.FromRadians(message.RadiansPerSecond));

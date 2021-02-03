@@ -4,17 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using ArduinoLibrary;
 using System.Linq;
+using RowerMoniter.Services;
+using RowerMoniter.Model;
+using System.Reactive.Linq;
 
 namespace TestSerialRead
 {
     class Program
     {
-        static SerialPort _serialPort;
-
         static void Main(string[] args)
         {
             var manager = new ArduinoDeviceManager();
-
             var port = manager.SerialPorts.Values.FirstOrDefault();
 
             if (port == null)
@@ -23,26 +23,38 @@ namespace TestSerialRead
                 return;
             }
 
+            // Arduino reports as 9600 BAUD regardless of what's configured in the Serial library.
             port.BaudRate = 115200;
             port.Open();
 
-            using (var moniter = new RowerMoniter.Arduino.PortMoniter())
+            EventService svc = EventService.Instance;
+
+            using (var moniter = new RowerMoniter.Arduino.PortMoniter(svc.ParseAndPublish))
             {
                 moniter.StartPort(port);
-
-                while (Console.ReadKey().Key != ConsoleKey.Enter)
+                using (svc.Pipeline.Subscribe(new WriteStrokesToConsole()))
                 {
-                    Thread.Sleep(100);
+                    while (Console.ReadKey().Key != ConsoleKey.Enter)
+                        Thread.Sleep(100);
                 }
             }
         }
 
-
-
-
-        public static Task<string> ReadSerialAsync() 
+        public class WriteStrokesToConsole : IObserver<IRowEvent>
         {
-            return Task.FromResult("");
+            public void OnCompleted()
+            {
+            }
+
+            public void OnError(Exception error)
+            {
+            }
+
+            public void OnNext(IRowEvent value)
+            {
+                Console.WriteLine(value.ToString());
+            }
         }
+
     }
 }

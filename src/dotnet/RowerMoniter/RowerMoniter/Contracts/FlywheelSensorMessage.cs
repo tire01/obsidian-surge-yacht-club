@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RowerMoniter.Json
+namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "update")]
-    public sealed class UpdateMessage : PocoObject
+    public sealed class FlywheelSensorMessage : PocoObject
     {
         [JsonProperty(PropertyName ="rps")]
         public decimal RadiansPerSecond {get; set;}

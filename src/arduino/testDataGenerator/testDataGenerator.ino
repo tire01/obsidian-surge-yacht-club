@@ -1,7 +1,7 @@
 #define USE_TIMER_1 true
 #define USE_TIMER_2 true
 
-#define TIMER0_FREQ_HZ 2000.0
+#define TIMER0_FREQ_HZ 2.0
 
 #define BAUD 115200 
 
@@ -22,7 +22,7 @@ String messages[] =
      "beginRecovery:{}",
      "update:{\"rps\":1.1073647484}",
      "endRecovery:{\"length\":1,\"duration\":2000}",
-     "beginStroke:{\"count\":1}",
+     "beginStroke:{\"count\":2}",
      "update:{\"rps\":1.1073647484}",
      "endStroke:{\"length\":1,\"duration\":1000}",
      "beginRecovery:{}",

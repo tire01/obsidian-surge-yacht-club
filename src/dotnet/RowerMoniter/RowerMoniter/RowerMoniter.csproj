@@ -104,26 +104,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Arduino\ArduinoDeviceManager.cs" />
     <Compile Include="Arduino\PortMoniter.cs" />
-    <Compile Include="Json\BeginRecoveryMessage.cs" />
-    <Compile Include="Json\BeginStrokeMessage.cs" />
-    <Compile Include="Json\EndRecoveryMessage.cs" />
-    <Compile Include="Json\EndStrokeMessage.cs" />
-    <Compile Include="Json\IdleMessage.cs" />
-    <Compile Include="Json\PocoObject.cs" />
-    <Compile Include="Json\UpdateMessage.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Contracts\BeginRecoveryMessage.cs" />
+    <Compile Include="Contracts\BeginStrokeMessage.cs" />
+    <Compile Include="Contracts\EndRecoveryMessage.cs" />
+    <Compile Include="Contracts\EndStrokeMessage.cs" />
+    <Compile Include="Contracts\IdleMessage.cs" />
+    <Compile Include="Contracts\PocoObject.cs" />
+    <Compile Include="Contracts\FlywheelSensorMessage.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\StrokeCounterViewModel.cs" />
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StrokeCounterView.xaml.cs">
+      <DependentUpon>StrokeCounterView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -134,10 +135,7 @@
     <Compile Include="Model\EventFactory.cs" />
     <Compile Include="Model\FlywheelStatus.cs" />
     <Compile Include="Model\Idle.cs" />
-    <Compile Include="Moniter\EventService.cs" />
-    <Compile Include="Moniter\Logger.cs" />
-    <Compile Include="Moniter\Reception.cs" />
-    <Compile Include="Moniter\Router.cs" />
+    <Compile Include="Services\EventService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -164,6 +162,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StrokeCounterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

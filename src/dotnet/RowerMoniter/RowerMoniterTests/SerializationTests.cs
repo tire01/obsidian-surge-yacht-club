@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using RowerMoniter.Json;
-using RowerMoniter.Moniter;
+using RowerMoniter.Contracts;
+using RowerMoniter.Services;
 using RowerMoniter.Model;
 using System;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace RowerMoniterTests
             var beginStroke = new BeginStrokeMessage() { Count = 1 };
             var endRecovery = new EndRecoveryMessage() { Duration = 2000, Length = 1 };
 
-            var update = new UpdateMessage() { RadiansPerSecond = 1.1073647484M };
+            var flywheel = new FlywheelSensorMessage() { RadiansPerSecond = 1.1073647484M };
             var endStroke = new EndStrokeMessage() { Duration = 1000, Length = 1 };
             var beginRecovery = new BeginRecoveryMessage() { };
 
@@ -29,22 +29,22 @@ namespace RowerMoniterTests
             serialized = JsonConvert.SerializeObject(beginStroke);
             Console.WriteLine($"beginStroke:{serialized}");
 
-            serialized = JsonConvert.SerializeObject(beginStroke);
-            Console.WriteLine($"beginStroke:{serialized}");
+            serialized = JsonConvert.SerializeObject(endStroke);
+            Console.WriteLine($"endStroke:{serialized}");
 
-            serialized = JsonConvert.SerializeObject(beginStroke);
-            Console.WriteLine($"beginStroke:{serialized}");
+            serialized = JsonConvert.SerializeObject(beginRecovery);
+            Console.WriteLine($"beginRecovery:{serialized}");
 
-            serialized = JsonConvert.SerializeObject(beginStroke);
-            Console.WriteLine($"beginStroke:{serialized}");
+            serialized = JsonConvert.SerializeObject(endRecovery);
+            Console.WriteLine($"endRecovery:{serialized}");
 
-            serialized = JsonConvert.SerializeObject(beginStroke);
-            Console.WriteLine($"beginStroke:{serialized}");
+            serialized = JsonConvert.SerializeObject(flywheel);
+            Console.WriteLine($"flywheel:{serialized}");
         }
 
 
         //  beginStroke:{"count":1}
-        //  update: { "rps":1.1073647484}
+        //  flywheel: { "rps":1.1073647484}
         //  endStroke: { "length":1,"duration":1000}
         //  beginRecovery: { }
         //  endRecovery: { "length":1,"duration":2000}
@@ -66,7 +66,7 @@ namespace RowerMoniterTests
             
             foreach (var line in lines) 
             {
-                messages.Add(SerialMoniter.ParseLine(line));
+                //messages.Add(SerialMoniter.ParseLine(line));
             }
 
             var events = messages

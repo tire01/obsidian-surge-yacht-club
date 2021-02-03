@@ -10,65 +10,65 @@ namespace RowerMoniter.Arduino
 {
     public class PortMoniter  : IDisposable
     {
-        byte[] _buffer = new byte[1024];
+        private readonly int _expectedMaxMessageLength;
 
-        StringBuilder sb = new StringBuilder();
+        private byte[] _buffer = new byte[1024];
+        
+        private StringBuilder sb;
+        private SerialPort _port;
 
-        SerialPort _port;
+        public PortMoniter(Action<string> lineRead, int expectedMaMessageLength = 64) 
+        {
+            _expectedMaxMessageLength = expectedMaMessageLength;
+            _lineRead = lineRead;
+        }
 
         public void StartPort(SerialPort port) 
         {
+            sb = new StringBuilder(_expectedMaxMessageLength);
             _port = port;
             port.DataReceived += DataReceivedHandler;
         }
 
-        private object _lockSerialPortRead = new object();
+        private readonly Action<string> _lineRead;
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            lock (_lockSerialPortRead)
+            // Not the most efficient IO here but whatever it works.
+            SerialPort sp = (SerialPort)sender;
+            int bytesRead = sp.Read(_buffer, 0, sp.BytesToRead);
+
+            byte[] c = new byte[1];
+
+            for (int i = 0; i < bytesRead; i++)
             {
-                SerialPort sp = (SerialPort)sender;
-                int bytesRead = sp.Read(_buffer, 0, sp.BytesToRead);
+                c[0] = _buffer[i];
 
-                byte[] c = new byte[1];
-
-                // Not the most efficient IO here, but it seems ot be able to keep up with 2000 lines per second.
-                for (int i = 0; i < bytesRead; i++)
+                switch (c[0])
                 {
-                    c[0] = _buffer[i];
+                    case 13: // CR
+                        {
+                            var line = sb.ToString();
+                            Task.Run(() => _lineRead(line));
+                            sb = new StringBuilder(_expectedMaxMessageLength);
+                        }
+                        break;
 
-                    switch (c[0])
-                    {
-                        case 13: // CR
-                            {
-                                var line = sb.ToString();
-                                Task.Run(() => LineReceived(line));
-                                sb = new StringBuilder();
-                            }
-                            break;
+                    case 10: // LF (ignore)
+                        break;
 
-                        case 10: // LF (ignore)
-                            break;
-
-                        default:
-                            sb.Append(Encoding.ASCII.GetString(c));
-                            break;
-                    }
-
+                    default:
+                        sb.Append(Encoding.ASCII.GetString(c));
+                        break;
                 }
 
-                // Guard against bad input data eating up resources.
-                if (sb.Length >= 1024)
-                {
-                    sb = new StringBuilder();
-                }
             }
-        }
 
-        public static void LineReceived(string line) 
-        {
-            Console.WriteLine(line);
+            // Guard against bad input data eating up resources.
+            if (sb.Length >= 1024)
+            {
+                sb = new StringBuilder();
+            }
         }
 
         public void Dispose()
@@ -76,31 +76,5 @@ namespace RowerMoniter.Arduino
             _port.DataReceived -= DataReceivedHandler;
         }
 
-        private string AutodetectArduinoPort()
-        {
-            ManagementScope connectionScope = new ManagementScope();
-            SelectQuery serialQuery = new SelectQuery("SELECT * FROM Win32_SerialPort");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(connectionScope, serialQuery);
-
-            try
-            {
-                foreach (ManagementObject item in searcher.Get())
-                {
-                    string desc = item["Description"].ToString();
-                    string deviceId = item["DeviceID"].ToString();
-
-                    if (desc.Contains("Arduino"))
-                    {
-                        return deviceId;
-                    }
-                }
-            }
-            catch (ManagementException e)
-            {
-                /* Do Nothing */
-            }
-
-            return null;
-        }
     }
 }
