@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace RowerMoniter.Contracts
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "update")]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "flywheer")]
     public sealed class FlywheelSensorMessage : PocoObject
     {
         [JsonProperty(PropertyName ="rps")]
         public decimal RadiansPerSecond {get; set;}
+
+        [JsonProperty(PropertyName = "ellapsed")]
+        public int Ellapsed { get; set; }
+
     }
 }

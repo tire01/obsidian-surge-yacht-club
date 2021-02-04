@@ -23,6 +23,7 @@ volatile unsigned int ReedSw2Buffer = 0;
 
 // Milliseconds the last flywheel sensor changed to high
 volatile unsigned long lastFlywheelTicks;
+
 // USe to determine radians/sec rotation rate ()
 volatile unsigned long ellapsedTicksFlywheel;
 
@@ -33,7 +34,9 @@ volatile bool reed2 = false;
 
 // Stroke parameters
 volatile unsigned long strokeBeginTicks = 0;
-volatile unsigned long strokeEllapsedTicks = 0;
+
+// Stroke parameters
+volatile unsigned long recoveryBeginTicks = 0;
 
 // Maybe useful?
 //volatile int strokeLengthCounter = 0;
@@ -62,7 +65,7 @@ void setup() {
   ITimer1.attachInterrupt(TIMER0_FREQ_HZ, readSensors);
   ITimer2.attachInterrupt(TIMER1_FREQ_HZ, writeData);
 }
-
+inline void writeData(){}
 void loop() {
   // put your main code here, to run repeatedly:
 }
@@ -86,6 +89,7 @@ void readSensors()
         ellapsedTicksFlywheel = ticks - lastFlywheelTicks;
     }
     lastFlywheelTicks = ticks;
+    writeFlywheel(0.0, ellapsedTicksFlywheel);
   }
 
   // REED1 HIGH to LOW transition
@@ -105,13 +109,13 @@ void readSensors()
   {
     if (trailingSwitch == REEDSW1) 
     {
-      beginStroke(ticks);
-      //endRecovery(ticks);
+       endRecovery(ticks);
+       beginStroke(ticks);
     } 
     else 
     {
        endStroke(ticks);
-      //beginRecovery(ticks);
+       beginRecovery(ticks);
     }
   }
 
@@ -126,14 +130,26 @@ void readSensors()
 
 inline void beginStroke(unsigned long millis) 
 {
-  strokeEllapsedTicks = strokeBeginTicks - millis;
   strokeCount++;
+  strokeBeginTicks = millis;
   writeBeginStroke(strokeCount);
 }
 inline void endStroke(unsigned long millis) 
 {
-  strokeBeginTicks = millis;
+   writeEndStroke(0, strokeBeginTicks - millis);
 }
+
+inline void beginRecovery(unsigned long millis) 
+{
+  recoveryBeginTicks = millis;
+  writeBeginRecovery();
+}
+
+inline void endRecovery(unsigned long millis) 
+{
+//  writeEndRecovery(0, recoveryBeginTicks - millis);
+}
+
 
 inline bool debounce(int inputPin, volatile unsigned int* buffer) 
 {
@@ -143,53 +159,52 @@ inline bool debounce(int inputPin, volatile unsigned int* buffer)
   return *buffer == 0xf000;
 }  
 
-        //  flywheel:{\"rps\":1.1073647484}
-        //  endStroke:{\"length\":1,\"duration\":1000}
-        //  beginRecovery:{}
-        //  endRecovery:{\"length\":1,\"duration\":2000}
-        //  idle: {}
-
-const String END_OBJECT = "}";
-const String BEGIN_OBJECT = ":{";
-const String QUOTE = "\"";
-const String COLON = ":";
-const String COMMA = ",";
-
-const String BEGIN_STROKE = "}";
-const String END_STROKE  = "}";
-const String BEGIN_RECOVERY = "}";
-const String END_RECOVERY = "}";
-const String FLYWHEEL = "}";
-
-const String ELLAPSED = "ellapsed";
-const String COUNT = "count";
-
 //beginStroke:{\"count\":1}
 void writeBeginStroke(unsigned long count) 
 {
-  printObjectName(BEGIN_STROKE);
-  printProperty(COUNT);
+  Serial.print("beginStroke:{\"count\":");
   Serial.print(count);
-  Serial.println(END_OBJECT)
+  Serial.println("}");
 }
 
-inline void printObjectName(String name) 
+//  endStroke:{\"length\":1,\"duration\":1000}
+void writeEndStroke(int strokeLength, unsigned int durationMs) 
 {
-  Serial.print(BEGIN_STROKE);  
-  Serial.print(BEGIN_OBJECT);  
+  Serial.print("endStroke:{\"length\":");
+  Serial.print(strokeLength);
+  Serial.print(",\"duration\":");
+  Serial.print(durationMs);
+  Serial.println("}");
 }
 
-inline void printPropertyName(Stirng name)
+//  beginRecovery:{}
+void writeBeginRecovery()
 {
-    Serial.print(QUOTE);  
-    Serial.print(name);
-    Serial.print(QUOTE);
-    Serial.print(COLON);
+  Serial.println("beginRecovery:{}");
 }
 
-// write stuff to serial computer.
-void writeData() 
+//  endRecovery:{\"length\":1,\"duration\":2000}
+void writeEndRecovery(int strokeLength, unsigned int durationMs) 
+{  
+  Serial.print("endRecovery:{\"length\":");
+  Serial.print(strokeLength);
+  Serial.print(",\"duration\":");
+  Serial.print(durationMs);
+  Serial.println("}");
+}
+
+//  flywheel:{\"rps\":1.1073647484,\"ellapsed\"}
+void writeFlywheel(float rps, unsigned int ellapsed)
 {
+  Serial.print("flywheel:{\"rps\":");
+  Serial.print(rps);
+  Serial.print(",\"ellapsed\":");
+  Serial.print(ellapsed);
+  Serial.println("}");
+
 }
 
-void clockReset() {}
+void writeIdle() 
+{
+  Serial.println("idle: {}");
+}
