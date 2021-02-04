@@ -62,8 +62,8 @@ void setup() {
   ITimer1.init();
   ITimer2.init();
   
-  ITimer1.attachInterrupt(TIMER0_FREQ_HZ, readSensors);
-  ITimer2.attachInterrupt(TIMER1_FREQ_HZ, writeData);
+  ITimer1.attachInterrupt(TIMER0_FREQ_HZ, writeData);
+  ITimer2.attachInterrupt(TIMER1_FREQ_HZ, readSensors);
 }
 inline void writeData(){}
 void loop() {
@@ -72,6 +72,8 @@ void loop() {
 
 void readSensors() 
 {
+  bool switchChanged = false;
+  
   unsigned long ticks = millis();
   unsigned int nextTrailingSwitch = trailingSwitch;
   
@@ -88,34 +90,37 @@ void readSensors()
     {
         ellapsedTicksFlywheel = ticks - lastFlywheelTicks;
     }
+    
     lastFlywheelTicks = ticks;
     writeFlywheel(0.0, ellapsedTicksFlywheel);
   }
 
   // REED1 HIGH to LOW transition
-  if (!nextReed1 && reed1) 
+  if (reed1 && !nextReed1) 
   {
+     switchChanged = true;
      nextTrailingSwitch = REEDSW1;
   }
 
   // REED2 HIGH to LOW transition
-  if (!nextReed2 && reed2) 
+  if (reed2 && !nextReed2) 
   {
+     switchChanged = true;
     nextTrailingSwitch = REEDSW2;
   }
 
   // Check to see if a reed switch is deactivated back to back signialling a transation between stroke and recovery
-  if (nextTrailingSwitch == trailingSwitch)
+  if (switchChanged && nextTrailingSwitch == trailingSwitch )
   {
     if (trailingSwitch == REEDSW1) 
     {
        endRecovery(ticks);
-       beginStroke(ticks);
+        beginStroke(ticks);
     } 
     else 
     {
-       endStroke(ticks);
-       beginRecovery(ticks);
+         endStroke(ticks);
+         beginRecovery(ticks);
     }
   }
 
