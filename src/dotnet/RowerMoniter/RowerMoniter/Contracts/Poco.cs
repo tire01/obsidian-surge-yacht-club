@@ -1,6 +1,6 @@
 ﻿namespace RowerMoniter.Contracts
 {
-    public abstract class PocoObject
+    public abstract class Poco
     {
     }
 }

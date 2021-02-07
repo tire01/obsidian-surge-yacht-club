@@ -11,7 +11,7 @@ namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "beginRecovery")]
 
-    public sealed class BeginRecoveryMessage : PocoObject
+    public sealed class BeginRecoveryMessage : Poco
     {
     }
 }

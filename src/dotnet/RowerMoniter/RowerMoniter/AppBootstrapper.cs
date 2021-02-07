@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ArduinoLibrary;
 using Caliburn.Micro;
@@ -15,6 +16,9 @@ namespace RowerMoniter
     { 
         private PortMoniter _moniter;
         private ArduinoDeviceManager _manager;
+
+        CancellationTokenSource _cts = new CancellationTokenSource();
+
 
         public AppBootstrapper()
         {
@@ -31,25 +35,31 @@ namespace RowerMoniter
 
             if (port == null)
             {
-                Console.WriteLine("No Arduino found.  Is it plugged in?");
-                return;
+                var replayService = new ReplayService();
+
+                _ = replayService.ReplayFile(@".\rowerData.json", _cts.Token);
             }
+            else
+            {
 
-            // Arduino reports as 9600 BAUD regardless of what's configured in the Serial library.
-            port.BaudRate = 115200;
-            port.Open();
+                // Arduino reports as 9600 BAUD regardless of what's configured in the Serial library.
+                port.BaudRate = 115200;
+                port.Open();
 
-            _moniter = new PortMoniter(EventService.Instance.ParseAndPublish);
+                _moniter = new PortMoniter(EventService.Instance.ParseAndPublish);
 
-            _moniter.StartPort(port);
+                _moniter.StartPort(port);
+            }
 
             DisplayRootViewFor<ShellViewModel>();
         }
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            base.OnExit(sender, e);
+            _cts.Cancel();
             _moniter.Dispose();
+
+            base.OnExit(sender, e);
         }
     }
 }

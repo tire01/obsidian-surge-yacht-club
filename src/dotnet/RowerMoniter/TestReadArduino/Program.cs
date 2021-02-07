@@ -20,12 +20,21 @@ namespace TestSerialRead
             if (port == null)
             {
                 Console.WriteLine("No Arduino found.  Is it plugged in?");
+                Console.ReadKey();
                 return;
             }
 
             // Arduino reports as 9600 BAUD regardless of what's configured in the Serial library.
             port.BaudRate = 115200;
-            port.Open();
+            try
+            {
+                port.Open();
+            }
+            catch (Exception) 
+            {
+                port.Close();
+                port.Open();
+            }
 
             EventService svc = EventService.Instance;
 

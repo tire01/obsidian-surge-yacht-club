@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endStroke")]
-    public sealed class EndStrokeMessage : PocoObject
+    public sealed class EndStrokeMessage : Poco
     {
         public int Length { get; set; }
         public int Duration { get; set; }

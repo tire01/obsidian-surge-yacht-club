@@ -10,7 +10,7 @@ namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endRecovery")]
 
-    public sealed class EndRecoveryMessage : PocoObject
+    public sealed class EndRecoveryMessage : Poco
     {
         public int Length { get; set; }
         public int Duration { get; set; }

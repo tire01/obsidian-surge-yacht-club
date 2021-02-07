@@ -27,6 +27,7 @@ namespace RowerMoniter.Arduino
         {
             sb = new StringBuilder(_expectedMaxMessageLength);
             _port = port;
+            port.DiscardInBuffer();
             port.DataReceived += DataReceivedHandler;
         }
 
@@ -61,7 +62,6 @@ namespace RowerMoniter.Arduino
                         sb.Append(Encoding.ASCII.GetString(c));
                         break;
                 }
-
             }
 
             // Guard against bad input data eating up resources.

@@ -10,7 +10,23 @@ namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "idle")]
 
-    public sealed class IdleMessage : PocoObject
+    public sealed class IdleMessage : Poco
     {
+    }
+
+
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "log")]
+
+    public class Log
+    {
+        public List<LoggedEvent> Events { get; } = new List<LoggedEvent>();
+    }
+
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "logEvent")]
+
+    public class LoggedEvent
+    {
+        public int Ellapsed { get; set; }
+        public string Message { get; set; }
     }
 }

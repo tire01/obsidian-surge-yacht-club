@@ -65,7 +65,7 @@ namespace RowerMoniterTests
               "idle:{}\r\n";
             
             var lines = testData.Split(new[] { '\r','\n' });
-            var messages = new List<Option<PocoObject>>();
+            var messages = new List<Option<Poco>>();
             
             foreach (var line in lines) 
             {

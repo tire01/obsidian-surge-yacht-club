@@ -13,16 +13,18 @@ namespace RowerMoniter.Model
         private static long _Index = 1;
 
         public Angle RadiansPerSecond { get; }
+        public TimeSpan Ellapsed { get; }
 
-        public FlywheelStatus(Angle radiansPerSecond) : base(_Index++)
+        public FlywheelStatus(Angle radiansPerSecond, TimeSpan ellapsed) : base(_Index++)
         {
             RadiansPerSecond = radiansPerSecond;
+            Ellapsed = ellapsed;
         }
 
         public static FlywheelStatus From(FlywheelSensorMessage message) 
         {
 
-            return new FlywheelStatus(Angle.FromRadians(message.RadiansPerSecond));
+            return new FlywheelStatus(Angle.FromRadians(message.RadiansPerSecond), TimeSpan.FromMilliseconds(message.Ellapsed));
         }
     }
 }

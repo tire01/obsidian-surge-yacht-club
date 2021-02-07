@@ -30,12 +30,12 @@ namespace RowerMoniter.Services
 
         public IObservable<IRowEvent> Pipeline { get { return _pipeline; } }
 
-        public static Option<PocoObject> ParseLine(string line)
+        public static Option<Poco> ParseLine(string line)
         {
             var firstColonIndex = line.IndexOf(':');
             if (firstColonIndex < 0)
             {
-                return Option<PocoObject>.None;
+                return Option<Poco>.None;
             }
 
             var messageType = line.Substring(0, firstColonIndex);
@@ -43,25 +43,25 @@ namespace RowerMoniter.Services
 
             if (line.Length < jsonStartIndex)
             {
-                return Option<PocoObject>.None;
+                return Option<Poco>.None;
             }
 
             switch (messageType)
             {
                 case "beginStroke":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<BeginStrokeMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<BeginStrokeMessage>(line.Substring(jsonStartIndex)));
                 case "update":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<FlywheelSensorMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<FlywheelSensorMessage>(line.Substring(jsonStartIndex)));
                 case "endStroke":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<EndStrokeMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<EndStrokeMessage>(line.Substring(jsonStartIndex)));
                 case "beginRecovery":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<BeginRecoveryMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<BeginRecoveryMessage>(line.Substring(jsonStartIndex)));
                 case "endRecovery":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<EndRecoveryMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<EndRecoveryMessage>(line.Substring(jsonStartIndex)));
                 case "idle":
-                    return Some((PocoObject)JsonConvert.DeserializeObject<IdleMessage>(line.Substring(jsonStartIndex)));
+                    return Some((Poco)JsonConvert.DeserializeObject<IdleMessage>(line.Substring(jsonStartIndex)));
                 default:
-                    return Option<PocoObject>.None;
+                    return Option<Poco>.None;
             }
         }
 
@@ -71,6 +71,11 @@ namespace RowerMoniter.Services
                 .Map(some => EventFactory.CreateEvent(some))
                 .Do(e => _pipeline.OnNext(e));
         }
-        
+
+        public void Publish(IRowEvent e)
+        {
+             _pipeline.OnNext(e);
+        }
+
     }
 }
