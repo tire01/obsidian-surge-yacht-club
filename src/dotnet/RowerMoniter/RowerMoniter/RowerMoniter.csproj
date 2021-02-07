@@ -118,6 +118,7 @@
     <Compile Include="Contracts\IdleMessage.cs" />
     <Compile Include="Contracts\PocoObject.cs" />
     <Compile Include="Contracts\FlywheelSensorMessage.cs" />
+    <Compile Include="SerializationTests.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StrokeCounterViewModel.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
