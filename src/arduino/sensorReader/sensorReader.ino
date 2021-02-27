@@ -152,7 +152,7 @@ inline void beginRecovery(unsigned long millis)
 
 inline void endRecovery(unsigned long millis) 
 {
-//  writeEndRecovery(0, recoveryBeginTicks - millis);
+  writeEndRecovery(0, recoveryBeginTicks - millis);
 }
 
 
