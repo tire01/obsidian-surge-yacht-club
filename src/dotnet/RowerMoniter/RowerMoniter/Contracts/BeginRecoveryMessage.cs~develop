@@ -11,7 +11,7 @@ namespace RowerMoniter.Json
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "beginRecovery")]
 
-    public class BeginRecovery
+    public class BeginRecoveryMessage
     {
     }
 }

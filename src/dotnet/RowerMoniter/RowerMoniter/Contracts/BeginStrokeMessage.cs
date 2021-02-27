@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace RowerMoniter.Json
+namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title ="beginStroke")]
 
-    public class BeginStroke
+    public sealed class BeginStrokeMessage : Poco
     {
         public int Count { get; set; }
     }

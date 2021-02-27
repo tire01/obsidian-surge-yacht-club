@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RowerMoniter
+namespace RowerMoniter.ViewModels
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LabeledUnitBox.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LabeledUnitBox : UserControl
     {
-        public MainWindow()
+        public LabeledUnitBox()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/* Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RowerMoniter.Contracts;
 using RowerMoniter.Services;
@@ -65,7 +65,7 @@ namespace RowerMoniterTests
               "idle:{}\r\n";
             
             var lines = testData.Split(new[] { '\r','\n' });
-            var messages = new List<Option<Poco>>();
+            var messages = new List<Option<PocoObject>>();
             
             foreach (var line in lines) 
             {
@@ -78,4 +78,4 @@ namespace RowerMoniterTests
         }
 
     }
-}
+}*/

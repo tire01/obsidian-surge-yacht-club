@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RowerMoniter.Json
+namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endStroke")]
-    public class EndStroke
+    public sealed class EndStrokeMessage : Poco
     {
         public int Length { get; set; }
         public int Duration { get; set; }
