@@ -6,8 +6,25 @@
              xmlns:local="clr-namespace:RowerMoniter.Views"
              xmlns:viewModels="clr-namespace:RowerMoniter.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{x:Type viewModels:ShellViewModel}">
-    <StackPanel>
-        <ContentControl x:Name="StrokeCounter"/>
-    </StackPanel>
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{x:Type viewModels:ShellViewModel}"  Background="#FF252525" >
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <ContentControl x:Name="Distance" Margin="4,4,4,4" MinWidth="400"/>
+            <ContentControl x:Name="Calories" Margin="4,4,4,4" MinWidth="200"/>
+            <ContentControl x:Name="StrokeRate" Margin="4,4,4,4" MinWidth="200"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <ContentControl x:Name="WorkTime" Margin="4,4,4,4" MinWidth="400"/>
+            <ContentControl x:Name="SplitTime" Margin="4,4,4,4" MinWidth="400"/>
+        </StackPanel>
+
+        <!-- <ContentControl x:Name="StrokeSpeed" Height="400" Width="600"/> -->
+    </Grid>
 </UserControl>

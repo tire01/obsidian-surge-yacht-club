@@ -14,6 +14,7 @@ namespace RowerMoniter.ViewModels
     public class StrokeCounterViewModel : PropertyChangedBase, IObserver<BeginStroke>
     {
         private string _strokeCount = "0";
+        private int _strokeCountInt = 0;
 
         public string StrokeCount
         {
@@ -36,7 +37,8 @@ namespace RowerMoniter.ViewModels
 
         public void OnNext(BeginStroke value)
         {
-            StrokeCount = value.Count.ToString();
+            _strokeCountInt++;
+            StrokeCount = _strokeCountInt.ToString();
         }
     }
 }
