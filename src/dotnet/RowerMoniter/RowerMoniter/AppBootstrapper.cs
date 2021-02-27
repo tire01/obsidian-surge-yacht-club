@@ -57,7 +57,7 @@ namespace RowerMoniter
         protected override void OnExit(object sender, EventArgs e)
         {
             _cts.Cancel();
-            _moniter.Dispose();
+            _moniter?.Dispose();
 
             base.OnExit(sender, e);
         }

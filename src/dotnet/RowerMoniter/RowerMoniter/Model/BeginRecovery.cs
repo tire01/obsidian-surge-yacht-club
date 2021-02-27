@@ -34,8 +34,13 @@ namespace RowerMoniter.Model
         }
     }
 
-    public interface IRowEvent 
+    public interface IRowEvent : ITimedEvent
     {
-        DateTime Time { get;  }
+        long Index { get; }
+    }
+
+    public interface ITimedEvent
+    {
+        DateTime Time { get; }
     }
 }

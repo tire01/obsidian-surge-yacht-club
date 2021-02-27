@@ -50,7 +50,7 @@ namespace RowerMoniter.Services
             {
                 case "beginStroke":
                     return Some((Poco)JsonConvert.DeserializeObject<BeginStrokeMessage>(line.Substring(jsonStartIndex)));
-                case "update":
+                case "flywheel":
                     return Some((Poco)JsonConvert.DeserializeObject<FlywheelSensorMessage>(line.Substring(jsonStartIndex)));
                 case "endStroke":
                     return Some((Poco)JsonConvert.DeserializeObject<EndStrokeMessage>(line.Substring(jsonStartIndex)));
@@ -69,12 +69,12 @@ namespace RowerMoniter.Services
         {
             ParseLine(line)
                 .Map(some => EventFactory.CreateEvent(some))
-                .Do(e => _pipeline.OnNext(e));
+                .Do(e => Publish(e));
         }
 
         public void Publish(IRowEvent e)
         {
-             _pipeline.OnNext(e);
+            _pipeline.OnNext(e);
         }
 
     }
