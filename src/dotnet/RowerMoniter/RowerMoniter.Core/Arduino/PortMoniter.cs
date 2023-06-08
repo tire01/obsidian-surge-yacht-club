@@ -17,9 +17,9 @@ namespace RowerMoniter.Arduino
         private StringBuilder sb;
         private SerialPort _port;
 
-        public PortMoniter(Action<string> lineRead, int expectedMaMessageLength = 64) 
+        public PortMoniter(Action<string> lineRead, int expectedMaxMessageLength = 64) 
         {
-            _expectedMaxMessageLength = expectedMaMessageLength;
+            _expectedMaxMessageLength = expectedMaxMessageLength;
             _lineRead = lineRead;
         }
 

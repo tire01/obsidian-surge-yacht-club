@@ -117,38 +117,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Arduino\ArduinoDeviceManager.cs" />
-    <Compile Include="Arduino\PortMoniter.cs" />
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Contracts\BeginRecoveryMessage.cs" />
-    <Compile Include="Contracts\BeginStrokeMessage.cs" />
-    <Compile Include="Contracts\EndRecoveryMessage.cs" />
-    <Compile Include="Contracts\EndStrokeMessage.cs" />
-    <Compile Include="Contracts\IdleMessage.cs" />
-    <Compile Include="Contracts\Poco.cs" />
-    <Compile Include="Contracts\FlywheelSensorMessage.cs" />
-    <Compile Include="Services\IntervalColleciton.cs" />
-    <Compile Include="Services\MomentCollection.cs" />
-    <Compile Include="Services\ReplayService.cs" />
-    <Compile Include="Services\RollingAverage.cs" />
-    <Compile Include="Services\PaceCalculator.cs" />
-    <Compile Include="Services\SplitTimeCalculator.cs" />
-    <Compile Include="ViewModels\BoxWithLabelViewModel.cs" />
     <Compile Include="ViewModels\CaloriesViewModel.cs" />
     <Compile Include="ViewModels\DistanceTravelledViewModel.cs" />
     <Compile Include="ViewModels\LabelBoxViewModel.cs" />
     <Compile Include="ViewModels\ReadoutViewModelBase.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="ViewModels\SpeedViewModel.cs" />
     <Compile Include="ViewModels\SplitTimeViewModel.cs" />
     <Compile Include="ViewModels\StrokeCounterViewModel.cs" />
     <Compile Include="ViewModels\StrokeRateViewModel.cs" />
-    <Compile Include="ViewModels\StrokeSpeedViewModel.cs" />
-    <Compile Include="ViewModels\TotalCaloriesViewModel.cs" />
     <Compile Include="ViewModels\WorkTimeViewModel.cs" />
-    <Compile Include="Controls\BoxWithLabelView.xaml.cs">
-      <DependentUpon>BoxWithLabelView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CaloriesView.xaml.cs">
       <DependentUpon>CaloriesView.xaml</DependentUpon>
     </Compile>
@@ -161,9 +139,6 @@
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SpeedView.xaml.cs">
-      <DependentUpon>SpeedView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SplitTimeView.xaml.cs">
       <DependentUpon>SplitTimeView.xaml</DependentUpon>
     </Compile>
@@ -173,22 +148,11 @@
     <Compile Include="Views\StrokeRateView.xaml.cs">
       <DependentUpon>StrokeRateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StrokeSpeedView.xaml.cs">
-      <DependentUpon>StrokeSpeedView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\WorkTimeView.xaml.cs">
       <DependentUpon>WorkTimeView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BeginRecovery.cs" />
-    <Compile Include="Model\BeginStroke.cs" />
-    <Compile Include="Model\EndRecovery.cs" />
-    <Compile Include="Model\EndStroke.cs" />
-    <Compile Include="Model\EventFactory.cs" />
-    <Compile Include="Model\FlywheelStatus.cs" />
-    <Compile Include="Model\Idle.cs" />
-    <Compile Include="Services\EventService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -216,10 +180,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\BoxWithLabelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CaloriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -236,10 +196,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SpeedView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\SplitTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -252,14 +208,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StrokeSpeedView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\WorkTimeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RowerMoniter.Core\RowerMoniter.Core.csproj">
+      <Project>{846b9db8-044a-47a6-ab54-5d995ebf6599}</Project>
+      <Name>RowerMoniter.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

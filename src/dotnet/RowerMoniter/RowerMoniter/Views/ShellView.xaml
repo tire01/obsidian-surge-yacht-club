@@ -23,6 +23,9 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <ContentControl x:Name="WorkTime" Margin="4,4,4,4" MinWidth="400"/>
             <ContentControl x:Name="SplitTime" Margin="4,4,4,4" MinWidth="400"/>
+            <StackPanel>
+                <Button x:Name="Reset"></Button>
+            </StackPanel>
         </StackPanel>
 
         <!-- <ContentControl x:Name="StrokeSpeed" Height="400" Width="600"/> -->
