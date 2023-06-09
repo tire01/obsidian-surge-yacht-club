@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RowerMoniter", "RowerMoniter\RowerMoniter.csproj", "{7997EF24-4F0C-4689-952E-7C9D3C0948AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RowerMoniterTests", "RowerMoniterTests\RowerMoniterTests.csproj", "{6F629166-1DE1-44DA-8223-79D2C0DB2D2B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestReadArduino", "TestReadArduino\TestReadArduino.csproj", "{8F0CAD15-F5E6-4CCA-B9BF-778938F51A51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDataRecorder", "TestDataRecorder\TestDataRecorder.csproj", "{728086DF-5774-4A78-94FE-A8E339BCC667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RowerMoniter.Core", "RowerMoniter.Core\RowerMoniter.Core.csproj", "{846B9DB8-044A-47A6-AB54-5D995EBF6599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{7997EF24-4F0C-4689-952E-7C9D3C0948AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7997EF24-4F0C-4689-952E-7C9D3C0948AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7997EF24-4F0C-4689-952E-7C9D3C0948AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F629166-1DE1-44DA-8223-79D2C0DB2D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F629166-1DE1-44DA-8223-79D2C0DB2D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F629166-1DE1-44DA-8223-79D2C0DB2D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F629166-1DE1-44DA-8223-79D2C0DB2D2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F0CAD15-F5E6-4CCA-B9BF-778938F51A51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F0CAD15-F5E6-4CCA-B9BF-778938F51A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F0CAD15-F5E6-4CCA-B9BF-778938F51A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{728086DF-5774-4A78-94FE-A8E339BCC667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{728086DF-5774-4A78-94FE-A8E339BCC667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{728086DF-5774-4A78-94FE-A8E339BCC667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846B9DB8-044A-47A6-AB54-5D995EBF6599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846B9DB8-044A-47A6-AB54-5D995EBF6599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846B9DB8-044A-47A6-AB54-5D995EBF6599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846B9DB8-044A-47A6-AB54-5D995EBF6599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

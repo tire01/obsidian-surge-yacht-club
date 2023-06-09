@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RowerMoniter.Contracts;
+using RowerMoniter.Core.Json;
 using RowerMoniter.Model;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace RowerMoniter.Services
 
                 using (StreamReader file = File.OpenText(path))
                 {
-                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented, TypeNameHandling = TypeNameHandling.All });
+                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented, TypeNameHandling = TypeNameHandling.None });
+
                     log = (Log)serializer.Deserialize(file, typeof(Log));
                 }
 

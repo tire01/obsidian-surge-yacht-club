@@ -9,10 +9,11 @@ using System.Runtime.Serialization;
 
 namespace RowerMoniter.Contracts
 {
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title ="beginStroke")]
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "beginRecovery")]
 
-    public sealed class BeginStrokeMessage : Poco
+    public sealed class BeginRecoveryMessage : Poco
     {
-        public int Count { get; set; }
     }
+
+    public abstract class Poco { }
 }

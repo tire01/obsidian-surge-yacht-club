@@ -73,9 +73,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RowerMoniter\RowerMoniter.csproj">
-      <Project>{7997ef24-4f0c-4689-952e-7c9d3c0948af}</Project>
-      <Name>RowerMoniter</Name>
+    <ProjectReference Include="..\RowerMoniter.Core\RowerMoniter.Core.csproj">
+      <Project>{846b9db8-044a-47a6-ab54-5d995ebf6599}</Project>
+      <Name>RowerMoniter.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
