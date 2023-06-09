@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "endRecovery")]
-
+    [Serializable]
     public sealed class EndRecoveryMessage : Poco
     {
         public int Length { get; set; }

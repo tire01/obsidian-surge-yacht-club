@@ -25,7 +25,7 @@ namespace RowerMoniter.Services
 
                 using (StreamReader file = File.OpenText(path))
                 {
-                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented, TypeNameHandling = TypeNameHandling.All , SerializationBinder = new SerializationBinder() });
+                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented, TypeNameHandling = TypeNameHandling.None });
 
                     log = (Log)serializer.Deserialize(file, typeof(Log));
                 }

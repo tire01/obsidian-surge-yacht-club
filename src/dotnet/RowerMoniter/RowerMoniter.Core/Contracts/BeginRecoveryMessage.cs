@@ -14,4 +14,6 @@ namespace RowerMoniter.Contracts
     public sealed class BeginRecoveryMessage : Poco
     {
     }
+
+    public abstract class Poco { }
 }

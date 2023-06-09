@@ -90,7 +90,6 @@
     <Compile Include="Contracts\EndStrokeMessage.cs" />
     <Compile Include="Contracts\FlywheelSensorMessage.cs" />
     <Compile Include="Contracts\IdleMessage.cs" />
-    <Compile Include="Contracts\Poco.cs" />
     <Compile Include="Json\TypeNameHandler.cs" />
     <Compile Include="Model\BeginRecovery.cs" />
     <Compile Include="Model\BeginStroke.cs" />

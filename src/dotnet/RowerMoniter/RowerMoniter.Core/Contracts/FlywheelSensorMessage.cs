@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace RowerMoniter.Contracts
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy), Title = "flywheer")]
+    [Serializable]
     public sealed class FlywheelSensorMessage : Poco
     {
         [JsonProperty(PropertyName ="rps")]
